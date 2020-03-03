@@ -1,0 +1,89 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Animation</title>
+</head>
+<style>
+div {
+  background-color: black;
+  width: 0px;
+  height: 1.1em;
+  text-align: center;
+  border: 0px solid lightblue;
+  margin: 3px;
+  font-size: 14px;
+}
+
+#conteneur{
+
+  border : 1px solid black;
+  border-radius: 5px;
+  width: 500px;
+  height: 1.6em;
+
+}
+
+#block {
+  background-color: lightblue;
+  color : white;
+  max-width: 490px;
+    border-radius: 5px;
+    width:0px;
+    position: relative;
+}
+
+button {
+  font-size: 14px;
+}
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+
+
+
+<div id="conteneur"><div id="block">chargement</div></div>
+
+<input id="pas" type='number'  min=0 max=1000> </input>
+<button id="go">&raquo; Faire le pas</button>
+<button id="reset">&raquo; Reset</button>
+
+
+
+
+<script>
+
+
+
+$( "#go" ).click(function() {
+var pas = document.getElementById('pas').value;
+$( "#block" ).animate({ width:"+="+ pas }, 1000 )
+var large = parseInt(getComputedStyle(document.getElementById('block')).width);
+if (large<200){
+  $( "#block" ).css({ 'background-color' : 'green'});
+}
+else if (large>=200 && large<400){
+  $( "#block" ).css({ 'background-color' : 'blue'});
+}
+else if (large>=400){
+  $( "#block" ).css({ 'background-color' : 'red'});
+}
+});
+
+
+
+
+//  .animate({ borderLeftWidth: "15px" }, 1000 );
+
+
+$( "#reset" ).click(function() {
+$( "#block" ).animate({
+  width: ""
+});
+});
+</script>
+
+
+
+</body>
+</html>

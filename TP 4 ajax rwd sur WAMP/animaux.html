@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>animaux</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <link href="https://fonts.googleapis.com/css?family=Chewy&display=swap" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <br>
+  <!-- Bouton déclencheur modal -->
+  <div class="row">
+  <div class="col-md-4"></div>
+  <button type="button" class="btn btn-success col-md-4" data-toggle="modal" data-target="#Modal"> Se connecter
+  </button>
+  <div class="col-md-4"></div>
+  </div>
+  <br>
+
+
+
+
+  <!-- modal -->
+  <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        <div class="modal-body">
+            <!-- Formulaire -->
+            <form action="connexion.js" method="POST">
+              <fieldset id = "fieldset1">
+                <legend> Connexion : </legend>
+                  <div class="row">
+                    <div>
+                        <label for="pseudo">Identifiant</label>
+                        <input class="champ col-md-4" type="text" id="identifiant" name="identifiant" onblur="verifId(this)" required>
+                    </div>
+                    <div>
+                        <label for="password">Mot de passe</label>
+                        <input class="champ col-md-4" type="password" id="password" name="password" onblur="verifId(this)" required>
+                    </div>
+                    <div>
+                      <input id="connexion" type=submit value="connexion" name="connexion">
+                    </div>
+                  </div>
+              </fieldset>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+<!-- menu (supprimé) -->
+  <nav id="flexcontainer1">
+    <div id="flexcontainer2">
+      <h1 class=titre>Parc zoologique</h1>
+    </div>
+      <div id=flexcontainer3>
+      </div>
+  </nav>
+
+   <h2> Les animaux du zoo </h2>
+
+<div id=contenu>
+  <br>
+  <div id='table'>
+    <!--Le tableau s'insère en JS ici -->
+  </div>
+  </div>
+
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="animaux.js"></script>
+<script src="bootstrap.min.js"> </script>
+<script src="popper.min.js"> </script>
+</body>
+</html>

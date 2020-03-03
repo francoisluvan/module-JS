@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TP Programmation WEB Côté Client</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="author" content="Christophe Brouard">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+	<header>
+		<p>Université Grenoble Alpes - IUT2 - Département informatique<br>
+		Module 4103C</p>
+	</header>
+	
+	<h1>TP 5 : JQuery - Partie 1 (JQuery Core) (2H)</h1>
+	<hr>
+	
+	<h2>Objectifs du TP :</h2>
+	<ul>
+		<li>Apprendre à utiliser la bibliothèque de fonctions JQuery</li>
+	</ul>
+	
+	<p>Ce document est consultable sur l'intranet du département. </p>
+	<hr>
+
+	 <p> <img src="JQuery.png"/> Les sites suivants : <a href="http://api.jquery.com/" target="_blank">http://api.jquery.com/</a>, <a href="http://learn.jquery.com/" target="_blank">http://learn.jquery.com/</a> et <a href="http://www.w3schools.com/jquery/jquery_ref_selectors.asp" target="_blank">http://www.w3schools.com/jquery/jquery_ref_selectors.asp</a> peuvent vous être utiles dans cet apprentissage.<br>
+	 De plus, vous trouverez sur OpenClassrooms <a href="https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1571114-memento-des-principales-fonctions">un mémento des principales fonctions jQuery</a> qui peut vous être très utile.</p>
+
+	 <p> Nous continuons de nous appuyer sur l'exemple de la calculatrice.<br>
+	 Commencez par créer dans vos répertoires <tt>public_html/calculatrice</tt> (version client) et <tt>public_html/calculatrice2</tt> (version ajax) une copie des fichiers <tt>calculatrice.js</tt> en <tt>calculatriceJQ.js</tt> (pour garder une version originale en "Vanilla JS" de votre code).<br>
+	 Nous repartirons des codes JavaScript que nous allons réécrire en utilisant JQuery. La taille du code devrait s'en trouver nettement réduite. Nous pourrons ainsi expérimenter le slogan associé à JQuery <strong>"write less, do more"</strong> </p>
+	
+	<h2>0. "Installation" de JQuery Core</h2>
+	<p>L'intégralité du code de JQuery est dans le fichier <tt>jquery-3.1.1.js</tt> (environ 10 000 lignes de code avec les commentaires et 250ko). Ce fichier peut être récupéré <a href="jquery/">ici</a> ou sur le site de JQuery <a href="http://code.jquery.com/"  target="_blank">http://code.jquery.com/</a>. Ce fichier contient l'intégralité des fonctions de base de JQuery.</p>
+	<p>Nous vous suggérons de travailler avec cette version non compressée (c'est-à-dire avec les commentaires et les espaces) en ajoutant simplement la ligne suivante <tt>&lt;script src="jquery-3.1.1.js"&gt;&lt;/script&gt;</tt> dans votre programme. L'intérêt de travailler avec la version non compressée est de faciliter le débogage au moment du développement.<br>Une autre façon de faire consisterait à utiliser un <a href="http://jquery.com/download/#using-jquery-with-a-cdn"  target="_blank">CDN</a> (Content Delivery Network).
+	 
+
+	<h2>1. Développement des animations de la calculatrice en JQuery</h2>
+	<p> Vous allez réécrire en JQuery une partie des codes développés en JavaScript lors des précédents TPs.</p>
+	<div>Vous avez développé 2 scripts JavaScript :</div>
+	<ul>
+	<li>Le premier correspond à une version "client" (<tt>public_html/calculatrice/calculatrice.js</tt>)</li>
+	<li>Le second correspond la version ajax (<tt>public_html/calculatrice<b>2</b>/calculatrice.js</tt>).</li>
+	</ul>
+	<p>
+	Nous allons travailler sur les copies <tt>calculatriceJQ.js</tt> de ces fichiers.<br>
+	 Pensez à changer, dans les 2 fichiers <tt>calculatrice.html</tt>, la référence à <tt>calculatrice.js</tt> par la référence à <tt>calculatriceJQ.js</tt>.<br>
+	 Procédez toujours pas à pas en mettant en commentaire la partie JavaScript, en écrivant la partie JQuery puis en testant le résultat.
+	</p>
+	<ol>
+		<li> Modifiez votre fonction <tt>rab()</tt> pour qu'elle se résume à une seule instruction JQuery (voir <a href="http://www.w3schools.com/jquery/jquery_dom_set.asp" target="_blank">w3schools - jQuery - Set Content and Attributes</a>). Rechargez la page et vérifiez que le clic sur le bouton "CE" remet toujours la zone d'affichage à blanc</li>
+		<li> De façon similaire, réécrivez toutes les parties de code contenant des modifications ou accès à l'attribut <tt>value</tt> de la zone d'affichage, en utilisant la méthode jQuery trouvée au point précédent</li>
+		<li>Réécrivez toutes les modifications ou accès aux attributs (<tt>setAttribute(), removeAttribute()</tt>) et aux styles</li>
+		<li> Continuez en réécrivant en JQuery les parties de code contenant des <tt>getElementsByClassName()</tt> (notamment dans <tt>mode_calcul()</tt>, <tt>mode_edition()</tt> et <tt>toJson()</tt> dans la version AJAX). Pensez au <a href="http://api.jquery.com/each/" target="_blank">each</a> lorsque plusieurs actions doivent être accomplies sur les mêmes éléments</li>
+		<li> Réécrivez le changement de place de la zone d'affichage (exercice 3 du TP2) avec les fonctions <tt>append()</tt> et <tt>prepend()</tt> de JQuery</li>
+	</ol>
+
+	<h2>2. Réécriture de la gestion de la persistance de l'état de la calculatrice en JQuery</h2>
+	<ol>
+		<li> Dans la version AJAX, réécrivez les appels AJAX en JQuery en vous appuyant sur les exemples donnés dans <a href="http://www.w3schools.com/jquery/jquery_ajax_get_post.asp" target="_blank">w3schools - jQuery - AJAX get() and post() Methods</a></li>
+		<li> Dans la bibliothèque JQuery, on trouve toutes les fonctions les plus utiles. Dans le cas de besoins spécifiques, il est possible d'ajouter des plugins. Une interface de recherche de plugins est disponible à l'adresse suivante : <a href="http://plugins.jquery.com/" target="_blank">http://plugins.jquery.com/</a>.<br>
+		Dans la version "client", réécrivez la gestion des cookies à l'aide du plugin <tt>jquery.cookie.js</tt> que vous récupérerez <a href="jquery/">ici</a>. Il suffit ensuite d'ajouter <tt>&lt;script src="jquery.cookie.js"&gt;&lt;/script&gt;</tt> dans votre programme et d'utiliser les fonctions disponibles décrites dans ce lien <a href="https://github.com/carhartl/jquery-cookie#readme" target="_blank">https://github.com/carhartl/jquery-cookie#readme</a> </li>
+	</ol>
+
+	<h2>3. S'il vous reste du temps... </h2>
+	<ol>
+	<li>Terminez les TPs précédents (ce qui devrait déjà être fait, évidemment)</li>
+	<li>Faites le <a href="https://fr.khanacademy.org/computing/computer-programming/html-js-jquery/jquery-tools-techniques/e/quiz--jquery-variables" target="_blank">mini-quiz sur les variables jQuery (5 questions) sur KhanAcademy</a></li>
+	<li>Faites le <a href="https://www.alsacreations.com/quiz/lire/17-jQuery-debutant">quiz jQuery débutant (10 questions) sur AlsaCréations </a></li>
+	<li>Faites le <a href="http://www.w3schools.com/jquery/jquery_quiz.asp" target="_blank">quiz jQuery (25 questions) sur W3Schools</a></li>
+	</ol>
+ 
+</body>
+</html>

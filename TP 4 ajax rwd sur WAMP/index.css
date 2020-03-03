@@ -1,0 +1,182 @@
+@media only screen and (min-width: 1200px) {
+
+
+body{
+  font-family:"arial", sans-serif !important;
+  background-color: rgba(200, 100, 10, 0.2) !important;
+  text-align: center !important;
+}
+#contenu {
+  display:flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  position:relative !important;
+  margin-left: 15% !important;
+  margin-right: 15% !important;
+}
+
+h1  {
+font-family: "Chewy" !important;
+color:orange !important;
+font-size: 50px !important;
+text-align:center !important;
+text-shadow: -2px -2px black, 2px 2px black, -5px 0 5px #000 !important;
+margin: 5% !important;
+}
+
+h2{
+  font-family: "Chewy" !important;
+  color:orange !important;
+  font-size: 32px !important;
+  text-align:center !important;
+  text-shadow: -1.5px -1.5px black, 1.5px 1.5px black, -2px 0 2px #000 !important;
+}
+
+p {
+  margin-left: 15% !important;
+  margin-right:15% !important;
+}
+
+table {
+    margin:0 auto !important;
+}
+
+.patate {
+  border: 2px solid #f85112 !important;
+  width : 100% !important;
+  border-collapse: collapse !important;
+  color:black !important;
+}
+
+.imganimal {
+  width:100px !important;
+  height:100px !important;
+}
+
+#table {
+  display : flex !important;
+  flex-direction: row !important;
+}
+
+
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1200px) {
+
+
+body{
+  font-family:"arial", sans-serif !important;
+  background-color: rgba(0, 100, 10, 0.2) !important;
+  text-align: center !important;
+}
+
+
+#contenu {
+  display:flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  position:relative !important;
+  margin-left: 15% !important;
+  margin-right: 15% !important;
+}
+
+h1  {
+font-family: "Chewy" !important;
+color:orange !important;
+font-size: 50px !important;
+text-align:center !important;
+text-shadow: -2px -2px black, 2px 2px black, -5px 0 5px #000 !important;
+margin: 5% !important;
+}
+
+h2{
+  font-family: "Chewy" !important;
+  color:orange !important;
+  font-size: 32px !important;
+  text-align:center !important;
+  text-shadow: -1.5px -1.5px black, 1.5px 1.5px black, -2px 0 2px #000 !important;
+}
+
+p {
+  margin-left: 15% !important;
+  margin-right:15% !important;
+}
+
+table {
+    margin:0 auto !important;
+}
+
+.patate {
+  border: 2px solid #f85112 !important;
+  width : 100% !important;
+  border-collapse: collapse !important;
+  color:black !important;
+}
+
+
+
+.imganimal {
+  width:100px !important;
+  height:100px !important;
+}
+}
+
+
+@media only screen and (max-width: 700px) {
+
+  body{
+    font-family:"arial", sans-serif !important;
+    background-color: rgba(0,50, 10, 0.2) !important;
+    text-align: center !important;
+  }
+
+
+  #contenu {
+    display:flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    position:relative !important;
+    margin-left: 15% !important;
+    margin-right: 15% !important;
+  }
+
+  h1  {
+  font-family: "Chewy" !important;
+  color:orange !important;
+  font-size: 50px !important;
+  text-align:center !important;
+  text-shadow: -2px -2px black, 2px 2px black, -5px 0 5px #000 !important;
+  margin: 5% !important;
+  }
+
+  h2{
+    font-family: "Chewy" !important;
+    color:orange !important;
+    font-size: 32px !important;
+    text-align:center !important;
+    text-shadow: -1.5px -1.5px black, 1.5px 1.5px black, -2px 0 2px #000 !important;
+  }
+
+  p {
+    margin-left: 15% !important;
+    margin-right:15% !important;
+  }
+
+  table {
+      margin:0 auto !important;
+  }
+
+  .patate {
+    border: 2px solid blue !important;
+    width : 100% !important;
+    border-collapse: collapse !important;
+    color:black !important;
+  }
+
+
+
+  .imganimal {
+    width:100px !important;
+    height:100px !important;
+  }
+  }

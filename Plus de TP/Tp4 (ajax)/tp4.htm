@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TP Programmation WEB Côté Client</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="author" content="Christophe Brouard">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	
+	<body>
+		<header>
+			<p>Université Grenoble Alpes - IUT2 - Département informatique<br>
+			Module 4103C</p>
+		</header>
+		
+		<h1>TP 4 : JavaScript, AJAX & JSON (2H)</h1>
+		<hr>
+		
+		<h2>Objectifs du TP :</h2>
+		<ul>
+			<li>Apprendre à réaliser des appels AJAX (GET ou POST, synchrone ou asynchrone, avec ou sans récupération de données)</li>
+			<li>Savoir utiliser les données transmises par le serveur pour modifier la page web</li> 
+			<li>Se familiariser avec le format de données JSON</li>
+		</ul>
+		
+		<p>Ce document est consultable sur l'intranet du département.</p>
+
+		<hr>
+
+		<p>Nous continuons de nous appuyer sur l'exemple de la calculatrice pour illustrer les mécanismes AJAX.
+		</p>
+
+		<p>Commencez par créer un répertoire <tt>calculatrice2</tt> dans votre <tt>public_html</tt> et copiez y le contenu de votre répertoire <tt>calculatrice</tt>. Ce sera notre répertoire de travail pour ce TP
+		</p>
+
+		<p>Nous allons modifier <tt>calculatrice2/calculatrice.js</tt> de façon à réaliser une partie des traitements côté serveur (pour l'instant l'intégralité des traitements est réalisée côté client, c'est-à-dire dans le navigateur).
+		</p>
+
+		<p> Les sites suivants : <a href="https://developer.mozilla.org/fr/docs/AJAX" target="_blank">https://developer.mozilla.org/fr/docs/AJAX</a> et <a href="https://www.w3schools.com/xml/ajax_intro.asp" target="_blank">
+		https://www.w3schools.com/xml/ajax_intro.asp</a> peuvent vous être utiles dans cet apprentissage</p>
+		
+		<!-- 1ère PARTIE -->
+		<h2>1. Faire réaliser le calcul par le serveur au moyen d'un appel AJAX</h2>
+
+		<p>Dans les TPs précédents portant sur la calculatrice paramétrable, les calculs sont réalisés sur le client (au moyen de la fonction <tt>eval</tt> de JavaScript). 
+		Nous proposons de faire réaliser ce calcul par le serveur (en PHP). </p>
+		<p><i><strong class='souligne'>Nota Bene 1 :</strong> Cet exercice a un but pédagogique. Il vise à vous faire mettre en pratique les appels AJAX dans un cas simple. Mais il est clair que si notre objectif se limitait à la réalisation d'une simple calculatrice, 
+		la réalisation du calcul par le serveur ne se justifierait pas.<br><strong class='souligne'>Nota Bene 2 :</strong> Par ailleurs, par souci de simplicité, nous avons réalisé des appels à la fonction PHP <tt>eval()</tt> côté serveur. 
+		Mais gardez à l'esprit que cette façon de procéder peut poser des problèmes de sécurité car il est alors facile de faire exécuter un code malveillant au serveur.</i></p>
+
+		<ol>
+		<li>Commencez par vous créer un fichier <tt>calcul-serveur.php</tt> dans votre répertoire <tt>calculatrice2</tt>. Ce script (dont le code est donné ci-dessus) permettra d'effectuer le calcul et renvoyer le résultat de celui-ci : 
+
+	<pre>
+	&lt;?php
+		$str = $_GET['data'];
+		eval("\$r=$str;");
+		echo $r;
+	?&gt;</pre>
+
+		<li>Pour pouvoir faire un appel AJAX utilisant la méthode GET depuis votre code JS, récupérez la fonction <tt>ajax_get_request()</tt> (à récupérer <a href="scripts/ajax_get_request.js">ici</a>) et intégrez la dans votre code JavaScript</li>
+
+		<li>En utilisant la fonction <tt>ajax_get_request()</tt>, modifiez ensuite votre fonction <tt>calcul()</tt> dans votre JavaScript (fonction écrite lors du TP2) pour que celle-ci envoie le calcul à effectuer au script <tt>calcul-serveur.php</tt> via un appel AJAX <strong>synchrone</strong> (Laissez juste de côté la fonction callback pour l'instant, on la définira à l'étape suivante).<br>
+		La chaîne à évaluer (le calcul) devra être passé via un paramètre 'data' transmise via l'URL (Si besoin, allez voir <a href="https://openclassrooms.com/fr/courses/245710-ajax-et-lechange-de-donnees-en-javascript/244798-lobjet-xmlhttprequest#/id/r-244527)">AJAX et l'échange de données en JavaScript - Passer des variables</a>) Par contre, comme vous le savez, certains caractères doivent être encodés avant d'être transmis dans une URL, donc pensez bien à encoder l'expression à évaluer avec la fonction JS <a href="http://www.w3schools.com/jsref/jsref_encodeuricomponent.asp" target="_blank"><tt>encodeURIComponent()</tt></a>
+		</li>
+
+		<li>Ecrivez le code d'une nouvelle fonction JS <tt>maj_zone_affichage(res)</tt> et définissez-la comme fonction "callback" de l'appel AJAX. Cette fonction doit prendre en paramètre la réponse du serveur (une simple chaîne de caractère correspondant au résultat à afficher) et réaliser la mise à jour de la zone d'affichage de la calculatrice</li>
+
+		<li>Testez cette 1ère version avec des calculs simples (sans cosinus, sinus, PI, ... => Avec par exemple : <tt>3*2+2</tt>, ou <tt>1+6/2</tt>, ...) et visualisez les appels AJAX dans l'onglet "Réseau" des outils de développement web de votre navigateur</li>
+
+		<li>Une fois que cela fonctionne pour les calculs simples, appliquer certains traitements (dans votre fonction JS <tt>calcul()</tt>)pour assurer la correspondance entre les fonctions JavaScript et PHP :
+		<ul>
+			<li><tt>Math.cos(0)</tt> en JS s'écrivant <tt>cos(0)</tt> en PHP, supprimez tous les "Math." de votre expression, avant de transmettre celle-ci à évaluer au serveur (Indication : Grâce à la méthode JS <a href="https://www.w3schools.com/jsref/jsref_replace.asp"><tt>replace()</tt></a>, remplacez toutes les occurences de l'expression <tt>/Math\./</tt> par <tt>""</tt> (chaine vide))</li>
+			<li><tt>Math.PI</tt> en JS s'écrivant <tt>pi()</tt> en PHP, faites le traitement nécessaire pour que cela fonctionne (Sachant que le traitement précédent va déjà supprimer les "Math." présents dans l'expression)</li>
+		</ul>  
+		</li>
+
+		<li>Une fois que tout fonctionne bien, ajoutez l'instruction <a href="http://php.net/manual/fr/function.sleep.php" target="_blank"><tt>sleep(10);</tt></a> dans le script <tt>calcul-serveur.php</tt> (avant le <tt>echo</tt>) et vérifiez que pendant ces 10 secondes d'attente de réponse du serveur, il est impossible de faire quoi que ce soit côté client</li>
+
+		<li>Modifiez ensuite l'appel AJAX pour qu'il soit <strong>asynchrone</strong> et vérifiez cette fois-ci qu'il est possible d'agir côté client pendant ces 10 secondes</li>
+	</ol>
+
+		<!-- 2ème PARTIE -->
+		<h2>2. Sauvegarde de l'état de la calculatrice par appel AJAX</h2>
+
+		<p>Lors du TP précédent, afin de mémoriser les fonctions ajoutées par l'utilisateur sur les boutons libres, nous avons utilisé les cookies pour stocker l'information côté client.<br> 
+		Nous allons remplacer cette solution de sauvegarde par l'utilisation d'un fichier <tt>etat.json</tt> sur le serveur (qui stockera l'état de la calculatrice) et des appels AJAX au serveur pour enregistrer/récupérer les informations de celui-ci.<br>
+		En plus de cette information, nous sauvegarderons aussi la valeur en mémoire de la calculatrice (si elle existe). 
+		</p>
+		voici un exemple de <tt>etat.json</tt> : 
+	<pre>
+	{
+		"fonctions":[
+			{"id":"libre1", "val":"Math.PI"},
+			{"id":"libre2", "val":" "},
+			{"id":"libre3", "val":"Math.cos"},
+			{"id":"libre4", "val":"Math.sqrt"},
+			{"id":"libre5", "val":"%"},
+			{"id":"libre6", "val":","}
+		],
+		"memoire": 6.28
+	}</pre>
+
+		<ol>
+			<li> Ecrivez une fonction <tt>toJSON()</tt> qui récupère les informations des "boutons libres" et de la valeur affichée par la calculatrice, puis qui retourne une chaîne de caractères correspondant à la description de l'état de la calculatrice au format JSON (voir l'exemple de <tt>etat.json</tt> ci-dessus, en sachant que les retours à la ligne sont à ignorer)</li>
+
+			<li>Créez un script <tt>server_save.php</tt> dans votre répertoire <tt>public_html/calculatrice2</tt> avec le contenu suivant :
+	<pre>
+	&lt;?php
+		$str = $_POST['data'];
+		$fich = fopen('etat.json','w');
+		fputs($fich, $str);
+		fclose($fich);
+	?&gt;</pre>
+			</li>
+
+			<li>Afin que votre script <tt>server_save.php</tt> puisse modifier le fichier <tt>etat.json</tt>, modifier les permissions du fichier <tt>etat.json</tt> pour que "n'importe qui" puisse écrire dans ce fichier (le setup-public-html ne suffisant pas)</li>
+
+			<li>Récupérez la fonction JS <a href="scripts/ajax_post_request.js">ajax_post_request()</a> puis modifiez la fonction <tt>save()</tt> du TP3 pour que celle-ci récupère l'état de la calculatrice grâce à un appel à <tt>toJSON()</tt>, puis réalise un appel AJAX asynchrone, de type POST au script <tt>server_save.php</tt> en passant l'état dans un paramètre <tt>data</tt> (Aucun callback n'étant nécessaire ici, indiquez <tt>null</tt> à la place du callback)</li>
+
+			<li>Supprimez le paramètre de la fonction <tt>save()</tt> (qui n'est plus utile maintenant) et ajoutez un appel à <tt>save()</tt> dans votre fonction <tt>range_memory()</tt></li>
+
+			<li>Vérifiez que des appels AJAX sont générés lorsque que des modifications des boutons libres et de la mémoire se produisent. Vérifiez aussi que le contenu du fichier <tt>etat.json</tt> est bien modifié en visualisant son contenu (La récupération de l'état de la calculatrice au chargement de la page se fait dans la partie qui suit)</li>
+		</ol>
+
+		<!-- 3ème PARTIE -->
+		<h2>3. Récupération de l'état de la calculatrice par appel AJAX</h2>
+
+		<p> Modifiez la fonction <tt>init()</tt> du TP2 pour pouvoir récupérer l'état sauvegardé de la calculatrice au moyen d'un appel AJAX au script <tt>recup_etat.php</tt>, dont le contenu est le suivant :<br>
+	<pre>
+	&lt;?php
+		$fich = fopen('etat.json', 'r');
+		$data = fgets($fich);
+		echo($data);
+		fclose($fich);
+	?&gt;</pre>
+		</p>
+
+		<p>On fera un appel AJAX asynchrone de type POST avec un appel à une fonction callback <tt>maj_etat()</tt> prenant en argument la chaîne de caractères retournée (Cet argument étant automatiquement passé à la fonction callback). Cet appel AJAX n'ayant pas de paramètre, indiquez <tt>null</tt> pour <tt>data</tt>.</p>
+
+		<p>Pensez à utiliser la méthode <tt>parse()</tt> de l'objet JSON pour transformer le texte en un objet JavaScript 
+		(voir <a href="https://www.w3schools.com/js/js_json_parse.asp" target="_blank">W3Schools - JSON.parse()</a>).
+		</p>
+
+		<!-- 4ème PARTIE -->
+		<h2>4. S'il vous reste du temps...</h2>
+
+		<ol>
+		<li>Utilisez un format XML pour échanger les données (voir <a href="https://www.w3schools.com/js/js_ajax_xmlfile.asp" target="_blank">https://www.w3schools.com/js/js_ajax_xmlfile.asp</a>)</li>
+		<li>Parcourez les 2 liens suivants : <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON" target="_blank">https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON</a>, 
+		<a href="http://www.alsacreations.com/article/lire/1161-json-ajax-jquery-jsonp-getjson.html" target="_blank">http://www.alsacreations.com/article/lire/1161-json-ajax-jquery-jsonp-getjson.html</a></li>
+		</ol>
+   
+	</body>
+</html>

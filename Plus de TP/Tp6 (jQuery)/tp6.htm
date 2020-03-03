@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TP Programmation WEB Côté Client</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="author" content="Christophe Brouard">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+	<header>
+		<p>Université Grenoble Alpes - IUT2 - Département informatique<br>
+		Module 4103C </p>
+	</header>
+	
+	<h1>TP 6 : JQuery - Partie 2 (JQuery UI) (2H)</h1>
+	<hr>
+	
+	<h2>Objectifs du TP :</h2>
+	<ul>
+		<li>Apprendre à utiliser la bibliothèque de fonctions JQuery UI</li>
+	</ul>
+	
+	<p>Ce document est consultable sur l'intranet du département. </p>
+	<hr>
+	 <p> Les sites suivants : <a href="http://jqueryui.com/" target="_blank">http://jqueryui.com/</a> et <a href="http://learn.jquery.com/jquery-ui/" target="_blank">http://learn.jquery.com/jquery-ui/</a> peuvent vous être utiles dans cet apprentissage.</p>
+	 <p>Nous continuons de nous appuyer sur l'exemple de la calculatrice (C'est le dernier TP sur cet exemple).<br>
+	 Nous travaillerons avec la version client (dans <tt>public_html/calculatrice/</tt>) et nous modifierons <tt>calculatriceJQ.js</tt>.</p>
+	
+	<h2>0. "Installation" de JQuery UI</h2>
+	<p><img src="jqueryui.png"/>L'intégralité du code de JQuery UI se trouve dans les fichiers <tt>jquery-ui.js</tt> (le code principal en JS) et <tt>jquery-ui.css</tt> (les styles associés aux différentes interfaces). Ces fichiers peuvent être récupérés <a href="./jquery/">ici</a> ou sur le site de JQuery <a href="https://code.jquery.com/ui/" target="_blank">https://code.jquery.com/ui/</a>.<br>
+	Il est aussi possible de générer sa propre bibliothèque de fonctions JQueryUI en sélectionnant les fonctionnalités nécessaires à son développement au moyen de l'interface suivante : <a href="http://jqueryui.com/download/" target="_blank">http://jqueryui.com/download/</a>.<br>
+	Comme dans le cas de JQuery Core, il existe une version de production et une version compressée. Nous vous suggérons de travailler avec la version non compressée (c'est-à-dire avec les commentaires et les espaces) en ajoutant simplement dans votre programme les 2 lignes suivantes : <tt>&lt;link rel="stylesheet" href="jquery-ui.css" /&gt;</tt> (dans le <tt>&lt;head&gt;</tt>) et <tt>&lt;script src="jquery-ui.js"&gt;&lt;/script&gt;</tt> (à la fin du <tt>&lt;body&gt;</tt>) <br>
+	<strong>Attention, il vous faudra aussi récuperer le dossier <tt>images</tt> <a href="./">ici</a> et le placer dans votre répertoire.</strong>
+	 
+	<h2>1. Glisser-Déposer</h2>
+	<p>En vous inspirant du code suivant : <a href="http://jqueryui.com/droppable/#shopping-cart"  target="_blank">http://jqueryui.com/droppable/#shopping-cart</a>, remplacez tous les traitements JavaScript du Drag and Drop du TP3 par du code JQuery (Vous serez amené à modifier légèrement votre HTML en remplaçant le <tt>draggable="true"</tt> par un <tt>class="unNom"</tt>).</p>
+	<p>Par ailleurs, dans les exemples donnés, les codes sont introduits par "<tt>$(function() {...});</tt>" qui est équivalent à "<tt>$(document).ready(function() {...});</tt>" (voir <a href="https://learn.jquery.com/using-jquery-core/document-ready/" target="_blank">la doc</a>) et qui permet d'attendre que la page soit chargée pour pouvoir lancer les instructions suivantes. Du coup, si vous placez bien votre nouveau code dans le <tt>init()</tt> que vous aviez défini précédemment, <strong>pas besoin de ce "bout de code introductif" !</strong></p>
+
+	<h2>2. Fenêtre de Dialogue</h2>
+	<p> En vous inspirant du code suivant : <a href="http://jqueryui.com/dialog/#animated" target="_blank">http://jqueryui.com/dialog/#animated</a>, Remplacez les <tt>alert()</tt> des fonctions <tt>calcul()</tt> et <tt>range_memory()</tt> du TP2 par les fenêtres de dialogue JQuery (Comme le montre l'exemple, le plus simple est d'ajouter une <tt>&lt;div&gt;</tt> dans votre HTML et de la faire apparaitre comme une boite de dialogue grâce à une commande jQuery).<br>
+	Testez ensuite différents <a href="http://jqueryui.com/effect/" target="_blank">effets</a> pour voir celui qui vous convient le mieux.</p>
+
+	<h2>3. Auto-complétion</h2>
+	<ol> 
+		<li>En vous inspirant du code suivant : <a href="http://jqueryui.com/autocomplete/#default"  target="_blank">http://jqueryui.com/autocomplete/#default</a>, faites en sorte que le début de la saisie d'une fonction dans la zone d'affichage fasse afficher la liste de propositions correspondant aux <strong>fonctions</strong> et <strong>constantes</strong> disponibles qui contiennent la chaine saisie</li>
+		<li>Réalisez la même chose en déclenchant cette fois-ci la recherche côté serveur, en vous inspirant du code suivant : <a href="http://jqueryui.com/autocomplete/#remote" target="_blank">http://jqueryui.com/autocomplete/#remote</a>, et en utilisant le script <tt>search.php</tt> suivant (que vous devez analyser pour bien le comprendre) :
+		<pre>
+&lt;?php
+	$term = $_GET['term'];
+	$data = "[";
+	$fonctions = array("Math.abs","Math.ceil","Math.cos","Math.E","Math.exp",
+	  "Math.floor","Math.log","Math.max","Math.min","Math.PI","Math.pow",
+	  "Math.round","Math.sin","Math.sqrt");
+
+	foreach ($fonctions as $value) {
+	  $pos = stripos($value, $term);
+	  if ($pos !== false) {
+	    $data = $data.'"'.$value.'",';
+	  }
+	}
+
+	if (strlen($data) > 1) {
+	  $data = substr($data, 0, strlen($data)-1).']';
+	} else {
+	  $data = $data.']';
+	}
+
+	echo $data;
+?&gt;
+		</pre>
+		<li>Visualisez les appels AJAX (dans l'onglet "Réseau" des outils de développement web) qui permettent à l'auto-complétion avec recherche côté serveur de fonctionner</li>
+	</ol>
+
+	<h2>4. Un petit air d'accordéon... (pour fêter la fin des TPs et l'arrivée imminente du projet !)</h2>
+	 <img src="accordeon.png"> <img src="accordeon2.png"> 
+	<p>En vous inspirant du code suivant : <a href="http://jqueryui.com/accordion/#collapsible"  target="_blank">http://jqueryui.com/accordion/#collapsible</a>, placez la liste des fonctions et constantes disponibles dans une zone "accordéon".<br>Vous serez amené à réécrire la partie HTML correspondante.</p>
+
+	<BR><BR><BR><BR><BR>
+	<h2>5. S'il vous reste du temps... </h2>
+	<ol>
+	<li> Parcourez les démos présentes sur <a href="http://jqueryui.com/demos/" target="_blank">http://jqueryui.com/demos/</a></li>
+	<li>Explorez les différents thèmes jQuery UI sur <a href="http://jqueryui.com/themeroller/" target="_blank">http://jqueryui.com/themeroller/</a> (cliquez sur "Gallery" dans le "ThemeRoller"). Et testez l'interface de création de thème sur la même page en définissant vos styles et en cliquant sur "download". Après il vous suffira de copier le fichier <tt>jquery-ui.theme.css</tt> et le dossier <tt>images</tt> téléchargé et de modifier la référence au style dans votre <tt>calculatrice.html</tt></li>
+	</ol>
+
+</body>
+</html>
